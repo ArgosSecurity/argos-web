@@ -1,18 +1,19 @@
 import apiRequest from "@/lib/api";
 
-export default async function formEditResponsavel(e) {
+export default async function formEditDependente(e) {
    const formData = e.target
 
    const requestFormData = {
-      id: formData.idResponsavel.value,
-      nome: formData.txtNomeResponsavel.value,
-      rg: formData.txtRgResponsavel.value,
-      apto: formData.txtAptoResponsavel.value
+      id: formData.txtDependenteId.value,
+      nome: formData.txtNomeDependente.value,
+      rg: formData.txtRgDependente.value,
    }
+
+   console.log(requestFormData)
 
    const resposta = {
       success: true,
-      res: await apiRequest.patch('responsavel', requestFormData)
+      res: await apiRequest.patch('dependente', requestFormData)
    }
 
    if (resposta.res.error) {

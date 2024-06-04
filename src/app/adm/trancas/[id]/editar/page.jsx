@@ -9,15 +9,15 @@ export default function EditarTrancas({params}){
       <Fragment>
          <div className='title flex flex-col'>
             <div className={'flex items-center gap-3'}>
-               <Link aria-label='Link de retorno para a tela principal da dashboard'  Link href={'/adm/responsaveis'}>
+               <Link aria-label='Link de retorno para a tela principal da dashboard'  Link href={'/adm/trancas'}>
                   <ArrowBack/>
                </Link>
                <Typography level={'h2'}>Dashboard</Typography>
             </div>
-            <Typography level={'body-md'} className={'pl-9'}>Dashboard / Gerenciar Responsáveis/ Adicionar Responsável</Typography>
+            <Typography level={'body-md'} className={'pl-9'}>Dashboard / Gerenciar Trancas / Editar Tranca</Typography>
          </div>
 
-         <FormEdtTranca/>
+         <FormEdtTranca id={params.id}/>
       </Fragment>
    )
 }

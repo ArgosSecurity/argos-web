@@ -4,7 +4,7 @@ import {Typography} from "@mui/joy";
 import {Fragment} from "react";
 import FormEdtDependente from "@/ui/adm/dependentes/FormEdtDependente";
 
-export default function EditarDependente(){
+export default function EditarDependente({params}){
    return(
       <Fragment>
          <div className='title flex flex-col'>
@@ -17,7 +17,7 @@ export default function EditarDependente(){
             <Typography level={'body-md'} className={'pl-9'}>Dashboard / Gerenciar Dependente / Editar Dependente</Typography>
          </div>
 
-         <FormEdtDependente/>
+         <FormEdtDependente id={params.id}/>
       </Fragment>
    )
 }

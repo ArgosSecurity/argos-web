@@ -3,9 +3,18 @@ import { Delete, Edit } from '@mui/icons-material'
 import { Button, Table, Typography } from '@mui/joy'
 import Link from 'next/link'
 import styles from './DependentesCadastrados.module.css'
+import apiRequest from "@/lib/api";
+import LinkButton from "@/ui/LinkButton";
+import ModalDeleteDependente from "@/ui/adm/dependentes/ModalDeleteDependente";
+import React from "react";
 
-export default function DependentesCadastrados() {
-  return (
+export default async function DependentesCadastrados({userId}) {
+
+   const dependentes = await apiRequest.get(`dependente/r/${userId}`).then(res =>{
+      return res.data
+   })
+
+   return (
       <ContainerLevel1 className={styles.container}>
          <Typography level={'title-lg'}>Dependentes Cadastrados</Typography>
 
@@ -19,18 +28,25 @@ export default function DependentesCadastrados() {
                </tr>
             </thead>
             <tbody>
-               <tr>
-                  <td>João da Silva</td>
-                  <td>123456789</td>
-                  <td>
-                     <Link href={'dependente/1'}>
-                        <Button aria-label='Botão para editar informações do dependente' color='neutral' variant='soft'><Edit/></Button>
-                     </Link>
-                  </td>
-                  <td><Button aria-label='Botão para deletar informações do dependente' color='neutral' variant='soft'><Delete/></Button></td>
-               </tr>
+               {dependentes.map(dependente => {
+                  return (
+                     <tr key={dependente.id}>
+                        <td>{dependente.nome}</td>
+                        <td>{dependente.rg}</td>
+                        <td>
+                           <Link href={`dependente/${dependente.id}`}>
+                              <Button fullWidth aria-label='Botão para editar informações do dependente' color='neutral'
+                                      variant='soft'><Edit/></Button>
+                           </Link>
+                        </td>
+                        <td>
+                           <ModalDeleteDependente id={dependente.id}/>
+                        </td>
+                     </tr>
+                  )
+               })}
             </tbody>
          </Table>
       </ContainerLevel1>
-  )
+   )
 }

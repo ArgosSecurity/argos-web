@@ -1,28 +1,45 @@
-import { get } from "@/lib/api";
+'use client'
+
 import ChamadoItem from "./ChamadoItem";
 import styles from './chamadosWrapper.module.css'
-import axios from "axios";
+import {Fragment, useEffect, useState} from "react";
+import apiRequest from "@/lib/api";
+import {Snackbar} from "@mui/joy";
+import {Done, Error} from "@mui/icons-material";
 
+export default function ChamadosWrapper(){
 
-export default async function ChamadosWrapper(){
+   const [chamados, setChamados] = useState([])
 
-    const chamados = await axios.get('http://localhost:8080/api/v1/chamado').then(res =>{
-       return res.data
-    })
+   async function getChamados(){
+      await apiRequest.get('chamado').then(res =>{
+         setChamados(res.data)
+      })
+   }
 
-    if (chamados.length){
-        return (
-           <div className={styles.container}>
-               {await chamados.map((chamado, key) => {
+   useEffect(() => {
+      getChamados()
+   }, );
+
+   if (chamados.length){
+      return (
+         <Fragment>
+            <div className={styles.container}>
+               {chamados.map((chamado, key) => {
                    return(<ChamadoItem chamado={chamado} key={key}/>)
                })}
-           </div>
-        )
-    } else {
-         return(
-               <div className={styles.container}>
-                  <h4>Não há chamados</h4>
-               </div>
-         )
-    }
+            </div>
+         </Fragment>
+      )
+   } else {
+      return(
+         <Fragment>
+            <div className={styles.container}>
+               <h4>Não há chamados</h4>
+            </div>
+         </Fragment>
+      )
+   }
+
+
 }

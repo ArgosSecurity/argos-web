@@ -6,10 +6,11 @@ import { Table, Typography } from "@mui/joy";
 import Link from "next/link";
 import { Fragment } from "react";
 import axios from "axios";
+import apiRequest from "@/lib/api";
 
 export default async function Historico({ params }) {
 
-   const historico = await axios.get(`http://localhost:8080/api/v1/historico/tag/${params.id}`).then(res =>{
+   const historico = await apiRequest.get(`historico/tag/${params.id}`).then(res =>{
       return res.data
    })
 
@@ -38,20 +39,22 @@ export default async function Historico({ params }) {
             <Table className={'pr-8 pl-8'}>
                <thead>
                   <tr>
-                     <th>TagID</th>
+                     <th>id</th>
                      <th>Dependente</th>
                      <th>RG</th>
                      <th>Registro</th>
+                     <th>Atividade</th>
                   </tr>
                </thead>
                <tbody>
                   {historico.map(historicoItem => {
                      return (
                         <tr key={historicoItem.id}>
-                           <td>{historicoItem.tag.id}</td>
+                           <td>{historicoItem.id}</td>
                            <td>{historicoItem.dependente?.nome ? historicoItem.dependente.nome : "Indefinido"}</td>
                            <td>{historicoItem.dependente?.rg ? historicoItem.dependente.rg : "Indefinido"}</td>
                            <td>{historicoItem.timestamp}</td>
+                           <td>{historicoItem.typeAtividade}</td>
                         </tr>
                      )
                   })}

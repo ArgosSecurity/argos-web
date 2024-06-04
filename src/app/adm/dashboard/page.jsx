@@ -23,9 +23,7 @@ export default function Dashboard(){
                <div className={styles.activityContainer}>
                   <AtividadesSistema/>
                </div>
-               <div className={styles.chamadosContainer}>
-                  <ChamadosPendentes/>
-               </div>
+               
             </div>
 
             <div>

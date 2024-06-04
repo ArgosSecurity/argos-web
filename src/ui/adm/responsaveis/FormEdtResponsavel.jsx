@@ -1,13 +1,60 @@
+'use client'
+
 import ContainerLevel1 from '@/ui/containers/ContainerLevel1'
-import { Button, Input, Typography } from '@mui/joy'
-import {get} from "@/lib/api";
+import {Button, Input, Snackbar, Typography} from '@mui/joy'
+import apiRequest from "@/lib/api";
 import formEditResponsavel from "@/actions/adm/formEditResponsavel";
+import {useEffect, useState} from "react";
+import formEditTranca from "@/actions/adm/formEditTranca";
+import {Done, Error} from "@mui/icons-material";
+import formEditDependente from "@/actions/adm/formEditDependente";
 
-export default async function FormEdtResponsavel({id}) {
+export default function FormEdtResponsavel({id}) {
 
-   const responsavel = await get(`responsavel/${id}`).then(res => {
-      return res.data
+   const [snackbarState, setSnackbarState] = useState({
+      open: false
    })
+
+   const [responsavel, setResponsavel] = useState({})
+
+   async function getResponsavel(){
+      await apiRequest.get(`responsavel/${id}`).then(res =>{
+         setResponsavel(res.data)
+      })
+   }
+
+   useEffect(() => {
+      getResponsavel()
+   }, []);
+
+   async function formSnackBar(e){
+      e.preventDefault()
+
+      formEditDependente(e)
+         .then(() => {
+            setSnackbarState({
+               open: true,
+               startDecorator: <Done/>,
+               color: "success",
+               message: "Responsavel alterado com sucesso!"
+            })
+         })
+         .catch(err => {
+            setSnackbarState({
+               open: true,
+               startDecorator: <Error/>,
+               color: "danger",
+               message: "Ocorreu um erro ao alterar o responsavel - " + err.message
+            })
+         })
+         .finally(() => {
+            setTimeout(() => {
+               setSnackbarState({
+                  open: false
+               })
+            }, 7000)
+         })
+   }
 
    return (
       <ContainerLevel1 className={' p-4 flex flex-col gap-5'}>
@@ -16,7 +63,7 @@ export default async function FormEdtResponsavel({id}) {
          </Typography>
 
          <div className={'flex flex-col gap-2'}>
-            <form action={formEditResponsavel} className={'flex flex-col gap-5'}>
+            <form onSubmit={formSnackBar} className={'flex flex-col gap-5'}>
                <input type={"hidden"} name={"idResponsavel"} value={responsavel.id}/>
 
                <div className={'flex flex-col gap-2'}>
@@ -37,6 +84,10 @@ export default async function FormEdtResponsavel({id}) {
                <Button type={'submit'}>Confirmar Alteração</Button>
             </form>
          </div>
+
+         <Snackbar color={snackbarState.color} variant="solid" startDecorator={snackbarState.startDecorator} open={snackbarState.open}>
+            {snackbarState.message}
+         </Snackbar>
       </ContainerLevel1>
    )
 }

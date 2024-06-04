@@ -7,18 +7,18 @@ import {Fragment, useState} from "react";
 import FormTag from "@/ui/user/FormChamado/FormTag";
 import FormAddDependente from "@/ui/user/FormChamado/FormAddDependente";
 
-const formOptions = {
-   tag : <Fragment>
-      <FormTag/>
-   </Fragment>,
-   dependente :
-      <Fragment>
-         <FormAddDependente/>
+
+
+export default function FormChamado({userId}) {
+   const formOptions = {
+      tag : <Fragment>
+         <FormTag userId={userId}/>
       </Fragment>,
-}
-
-
-export default function FormChamado() {
+      dependente :
+         <Fragment>
+            <FormAddDependente userId={userId}/>
+         </Fragment>,
+   }
 
    const [tipoChamado, setTipoChamado] = useState('');
 

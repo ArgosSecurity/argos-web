@@ -3,8 +3,12 @@ import {Typography} from "@mui/joy";
 import FormChamado from "@/ui/user/FormChamado/FormChamado";
 import {ArrowBack} from "@mui/icons-material";
 import Link from "next/link";
+import {verifySession} from "@/lib/dal";
 
-export default function ChamadoPage() {
+export default async function ChamadoPage() {
+
+   const userSession = await verifySession()
+
    return (
       <Fragment>
          <div className='title flex flex-col'>
@@ -18,7 +22,7 @@ export default function ChamadoPage() {
          </div>
 
          <div className={'flex justify-center items-center'}>
-            <FormChamado/>
+            <FormChamado userId={userSession.userId}/>
          </div>
       </Fragment>
    )

@@ -3,7 +3,7 @@ import { Done, Error } from "@mui/icons-material";
 import {Button, Snackbar, Textarea, Typography} from "@mui/joy";
 import { useState } from "react";
 
-export default function FormTag(){
+export default function FormTag({userId}){
 
    const [snackbarState, setSnackbarState] = useState({
       open: false
@@ -37,6 +37,7 @@ export default function FormTag(){
    return (
       <form onSubmit={formChamadoSnackBar} className={'flex flex-col gap-5'}>
          <input type="hidden" name={'tipoChamado'} value={'tag'}/>
+         <input type="hidden" name={'userId'} value={userId}/>
 
          <div className={'flex flex-col gap-2'}>
             <Typography level={'body-lg'}>Motivo do chamado</Typography>

@@ -1,4 +1,4 @@
-import {post} from "@/lib/api";
+import apiRequest from "@/lib/api";
 
 export default async function formChamado(e){
    e.preventDefault()
@@ -23,7 +23,7 @@ export default async function formChamado(e){
 
    const resposta = {
       success: true,
-      res: await post(`chamado?userId=${1}`, body)
+      res: await apiRequest.post(`chamado?userId=${formData.userId.value}`, body)
    }
 
    if (resposta.res.error) {

@@ -7,7 +7,7 @@ import Link from "next/link";
 import ToggleColorButton from "@/ui/ToggleColorButton";
 import { verifySession } from "@/lib/dal";
 import { redirect } from "next/navigation";
-import { get } from "@/lib/api";
+import apiRequest from "@/lib/api";
 
 export const metadata = {
   title: "Dashboard - Argos Security",
@@ -21,7 +21,7 @@ export default async function RootLayout({ modal, children }) {
      redirect("/redirect")
   }
 
-  const userData = await get(`responsavel/${session.userId}`).then(res => {
+  const userData = await apiRequest.get(`responsavel/${session.userId}`).then(res => {
     return res.data
   })
 

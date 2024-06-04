@@ -4,10 +4,11 @@ import TagItem from './TagItem'
 
 import styles from './TagasCadastradas.module.css'
 import axios from "axios";
+import apiRequest from "@/lib/api";
 
-export default async function TagsCadastradas() {
-
-   const tags = await axios.get('http://localhost:8080/api/v1/tag').then(res =>{
+export default async function TagsCadastradas({userId}) {
+   console.log(userId)
+   const tags = await apiRequest.get(`tag/r/${userId}`).then(res =>{
       return res.data
    })
 
@@ -15,7 +16,7 @@ export default async function TagsCadastradas() {
       <ContainerLevel1 className={styles.container + ' flex flex-col gap-2 h-full'}>
          <Typography level={'title-lg'}>Tags Cadastradas</Typography>
          <div>
-            {tags.map(tag => {
+            {tags.length === 0 ? "Sem Tags cadastradas" : tags.map(tag => {
                return (
                   <TagItem key={tag.id} tag={tag}/>
                )
