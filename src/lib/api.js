@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 const apiRequest = axios.create({
-   baseURL: 'http://localhost:8080/api/v1/'
+   baseURL: 'https://qd378qqp-8080.brs.devtunnels.ms/api/v1/'
  });
 
 export default apiRequest
